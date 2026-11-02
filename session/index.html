@@ -24,6 +24,7 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
 body { margin: 0; background: var(--paper); color: var(--plum); font: 17px/1.75 var(--body); -webkit-font-smoothing: antialiased; }
 a { color: inherit; }
 :focus-visible { outline: 3px solid var(--orchid); outline-offset: 3px; border-radius: 4px; }
@@ -126,7 +127,7 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .opts input:focus-visible + span { outline: 3px solid var(--tape); outline-offset: 2px; }
 .consent { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
 .consent input { width: 22px; height: 22px; margin-top: 4px; accent-color: var(--orchid); flex: none; }
-.trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .error { color: #FFB3C8; font-weight: 500; min-height: 1.6em; margin: 0; }
 .done { display: none; text-align: center; padding: 30px 0; }
 .done h3 { font-size: 34px; margin: 16px 0 8px; }
