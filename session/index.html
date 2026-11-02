@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic coding · ويكاند مع Feres Othman</title>
+<meta name="description" content="زوز سيانسات أونلاين في ويكاند واحد: تشوف كيفاش app حقيقي يتبنى بالـ AI agent، والطريقة اللي نخدم بيها كل نهار.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+:root {
+  --plum: #2B1531;
+  --deep: #1A0C1E;
+  --paper: #F1ECF3;
+  --orchid: #C9739F;
+  --mint: #57C29A;
+  --tape: #EADCC8;
+  --muted: #6E5A72;
+  --line: #DCD2DF;
+  --display: "Lalezar", "IBM Plex Sans Arabic", sans-serif;
+  --body: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--plum); font: 17px/1.75 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--orchid); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(680px, 100% - 40px); margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.25; margin: 0; }
+h2 { font-size: clamp(30px, 6vw, 40px); margin-bottom: 18px; }
+p { margin: 0 0 14px; }
+.en { unicode-bidi: isolate; direction: ltr; display: inline-block; }
+
+/* Tape labels: the one device carried over from the videos. */
+.tape { display: inline-block; background: var(--tape); color: var(--plum); font-family: var(--display); font-size: 20px; line-height: 1.2; padding: 4px 14px; transform: rotate(-2.5deg); box-shadow: 0 6px 14px rgba(26, 12, 30, .18); }
+.tape.dark { background: var(--plum); color: var(--tape); }
+
+/* Hero */
+.hero { background: radial-gradient(120% 80% at 70% 0%, #43213F 0%, var(--plum) 55%, var(--deep) 100%); color: var(--paper); padding: 28px 0 64px; overflow: hidden; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 44px; font-size: 15px; color: #CDBFD0; }
+.top b { font-family: var(--display); font-weight: 400; font-size: 20px; color: var(--paper); }
+.hero h1 { font-size: clamp(40px, 9vw, 64px); margin: 18px 0 14px; }
+.hero h1 .agent { color: var(--orchid); }
+.hero .lead { font-size: 19px; color: #DCD0DF; max-width: 34em; }
+.term { margin: 34px 0 30px; background: var(--deep); border: 1px solid #4A2A4C; border-radius: 16px; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); direction: ltr; text-align: left; overflow: hidden; }
+.term-bar { display: flex; gap: 8px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #3A1F3C; font: 500 13px var(--mono); color: #9C88A0; }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #5B3A5D; }
+.term-bar span { margin-left: 8px; }
+.term pre { margin: 0; padding: 18px 18px 22px; min-height: 200px; font: 500 clamp(12.5px, 3.4vw, 15px)/1.8 var(--mono); color: #E9DFEB; white-space: pre-wrap; }
+.term .k { color: var(--orchid); }
+.term .ok { color: var(--mint); }
+.term .dim { color: #8E7A92; }
+.caret { display: inline-block; width: 8px; height: 1.1em; background: var(--orchid); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 30px; border-radius: 14px; background: var(--orchid); color: #fff; font: 400 23px var(--display); text-decoration: none; border: 0; cursor: pointer; transition: transform .12s; }
+.cta:active { transform: scale(.97); }
+.cta-note { display: block; margin-top: 10px; font-size: 15px; color: #BBAABF; }
+
+/* Ticket: the facts of the session */
+.ticket { position: relative; margin-top: -30px; background: #fff; border-radius: 18px; box-shadow: 0 18px 40px rgba(43, 21, 49, .14); display: grid; grid-template-columns: repeat(2, 1fr); }
+.ticket div { padding: 18px 20px; border-top: 1px dashed var(--line); }
+.ticket div:nth-child(-n+2) { border-top: 0; }
+.ticket div:nth-child(odd) { border-left: 1px dashed var(--line); }
+.ticket small { display: block; color: var(--muted); font-size: 14px; }
+.ticket strong { font-family: var(--display); font-weight: 400; font-size: 24px; }
+.ticket .tape { position: absolute; top: -16px; left: 18px; }
+
+section { padding: 64px 0 0; }
+
+/* Method: a real sequence, so it is numbered. */
+.steps { list-style: none; padding: 0; margin: 22px 0 0; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+.steps li::before { content: counter(s); font: 400 34px/1 var(--display); color: var(--orchid); }
+.steps b { display: block; font-family: var(--display); font-weight: 400; font-size: 22px; }
+.steps span { color: var(--muted); }
+.also { margin: 22px 0 0; padding: 0; list-style: none; }
+.also li { padding: 8px 26px 8px 0; position: relative; }
+.also li::before { content: ""; position: absolute; right: 4px; top: 19px; width: 9px; height: 9px; border-radius: 2px; background: var(--orchid); transform: rotate(45deg); }
+
+/* Take-home: shown as the folder you leave with. */
+.files { margin-top: 20px; background: var(--deep); color: #E9DFEB; border-radius: 16px; padding: 20px 22px; direction: ltr; text-align: left; font: 500 clamp(13px, 3.6vw, 15px)/2 var(--mono); }
+.files .dir { color: var(--orchid); }
+.files .note { color: #8E7A92; }
+.files-ar { margin-top: 14px; color: var(--muted); }
+
+.fit { display: grid; gap: 16px; margin-top: 8px; }
+.fit div { background: #fff; border-radius: 16px; padding: 20px 22px; }
+.fit h3 { font-size: 22px; margin-bottom: 8px; }
+.fit ul { margin: 0; padding-right: 20px; }
+.fit li { margin: 4px 0; }
+.fit .no { background: transparent; border: 1px solid var(--line); }
+
+.me { display: grid; gap: 6px; }
+.me p { color: #3F2B44; }
+
+.later { margin-top: 64px; border: 2px dashed var(--line); border-radius: 18px; padding: 22px; }
+.later h3 { font-size: 24px; margin: 12px 0 6px; }
+.later p { margin: 0; color: var(--muted); }
+
+details { border-top: 1px solid var(--line); padding: 14px 0; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 400 26px/1 var(--display); color: var(--orchid); transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 10px 0 0; color: #3F2B44; }
+
+/* Booking form */
+.book { margin-top: 64px; background: var(--plum); color: var(--paper); padding: 56px 0 64px; }
+.book h2 { margin-bottom: 6px; }
+.book .sub { color: #CDBFD0; margin-bottom: 26px; }
+form { display: grid; gap: 22px; }
+label, legend { font-weight: 700; display: block; margin-bottom: 8px; }
+.req { color: var(--orchid); }
+input[type=text], input[type=tel], textarea, select { width: 100%; font: 17px var(--body); color: var(--plum); background: var(--paper); border: 2px solid transparent; border-radius: 12px; padding: 12px 14px; }
+input:focus, textarea:focus, select:focus { border-color: var(--orchid); outline: none; }
+input[type=tel] { direction: ltr; text-align: right; }
+fieldset { border: 0; padding: 0; margin: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { margin: 0; font-weight: 500; }
+.opts input { position: absolute; opacity: 0; pointer-events: none; }
+.opts span { display: inline-block; padding: 9px 16px; border-radius: 999px; border: 2px solid #5A3A5E; cursor: pointer; transition: background .15s, border-color .15s; }
+.opts input:checked + span { background: var(--orchid); border-color: var(--orchid); color: #fff; }
+.opts input:focus-visible + span { outline: 3px solid var(--tape); outline-offset: 2px; }
+.consent { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
+.consent input { width: 22px; height: 22px; margin-top: 4px; accent-color: var(--orchid); flex: none; }
+.trap { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.error { color: #FFB3C8; font-weight: 500; min-height: 1.6em; margin: 0; }
+.done { display: none; text-align: center; padding: 30px 0; }
+.done h3 { font-size: 34px; margin: 16px 0 8px; }
+.book.sent form { display: none; }
+.book.sent .done { display: block; }
+
+footer { background: var(--deep); color: #9C88A0; padding: 34px 0; font-size: 15px; }
+footer .sign { font-family: var(--display); font-size: 26px; color: var(--paper); margin-bottom: 6px; }
+
+@media (min-width: 640px) {
+  .fit { grid-template-columns: 1fr 1fr; }
+  .ticket { grid-template-columns: repeat(4, 1fr); }
+  .ticket div { border-top: 0; }
+  .ticket div:not(:last-child) { border-left: 1px dashed var(--line); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .caret { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top"><b>Feres Othman</b><span>ويكاند أونلاين على الـ <span class="en">agentic coding</span></span></div>
+    <span class="tape">beginner friendly</span>
+    <h1>تشوف app حقيقي يتبنى بالـ <span class="agent en">AI agent</span>، وتفهم كيفاش تعملها إنتي</h1>
+    <p class="lead">زوز سيانسات لايف، ساعتين نهار السبت وساعتين نهار الأحد. نوريك الطريقة اللي نخدم بيها كل نهار، خطوة بخطوة، من الفكرة حتى للـ app اللي تخدم.</p>
+
+    <div class="term" aria-label="مثال: الـ agent يبني app وإنت تراجع">
+      <div class="term-bar"><i></i><i></i><i></i><span>claude — ~/my-first-app</span></div>
+      <pre id="term"></pre>
+    </div>
+
+    <a class="cta" href="#book">احجز بلاصتك</a>
+    <span class="cta-note">ما تخلّص شي توّا. نكلّموك على واتساب كي تتكمّل الدفعة.</span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="ticket" role="list">
+      <span class="tape dark">الويكاند الأوّل</span>
+      <div role="listitem"><small>وقتاش</small><strong>السبت + الأحد</strong></div>
+      <div role="listitem"><small>قدّاش</small><strong>2 × ساعتين</strong></div>
+      <div role="listitem"><small>وين</small><strong>أونلاين، لايف</strong></div>
+      <div role="listitem"><small>السوم</small><strong>50 د.ت</strong></div>
+    </div>
+  </div>
+
+  <section class="wrap" aria-labelledby="method">
+    <h2 id="method">شنوّة باش تشوف</h2>
+    <p>نبني app حقيقي قدّامك مع AI agent، ونفسّر كل خطوة. الطريقة هي نفسها اللي نخدم بيها كل نهار:</p>
+    <ol class="steps">
+      <li><div><b>Plan</b><span>قبل ما يكتب حتى سطر، تقرّر شنوّة نبنيو وكيفاش.</span></div></li>
+      <li><div><b>Instruct</b><span>تعطي الـ agent الـ context الصحيح، موش prompt سحري.</span></div></li>
+      <li><div><b>Review</b><span>تقرا وتفهم شنوّة كتب، وما تعملش accept لكل شي.</span></div></li>
+      <li><div><b>Fix</b><span>كي يطيح، تعرف كيفاش تخلّيه يصلّح روحو.</span></div></li>
+    </ol>
+    <ul class="also">
+      <li>كيفاش تختار الـ model، وقدّاش يتكلّف بالحق.</li>
+      <li>السوق: شنوّة الـ teams يطلبو توّا، ووين تبدا.</li>
+      <li>وقت كامل للأسئلة متاعك، لايف.</li>
+    </ul>
+  </section>
+
+  <section class="wrap" aria-labelledby="take">
+    <h2 id="take">شنوّة تهزّ معاك</h2>
+    <div class="files" aria-hidden="true">
+      <div class="dir">feres-kit/</div>
+      <div>├── skills/ <span class="note"># I use them at work</span></div>
+      <div>├── review-prompts/ <span class="note"># check AI code</span></div>
+      <div>└── tips.md <span class="note"># not in tutorials</span></div>
+    </div>
+    <p class="files-ar">الـ skill files اللي عملتهم ونستعملهم في خدمتي، الـ review prompts باش تقرا الـ code اللي يكتبو الـ AI، والـ tips اللي ما تلقاهاش في الـ tutorials.</p>
+  </section>
+
+  <section class="wrap" aria-labelledby="fit">
+    <h2 id="fit">لشكون؟</h2>
+    <div class="fit">
+      <div>
+        <h3>يناسبك كان</h3>
+        <ul>
+          <li>طالب ولا junior تكودي شوية وتحب تخدم بالـ AI بالطريقة الصحيحة.</li>
+          <li>تستعمل ChatGPT وتعمل copy-paste، وتحب تعدّي للـ agents.</li>
+          <li>تحب تفهم وين ماشي السوق قبل ما تقرّر.</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>ما يناسبكش كان</h3>
+        <ul>
+          <li>تحب تولّي expert في ويكاند واحد.</li>
+          <li>تلوّج على prompt سحري يعمل الخدمة في بلاصتك.</li>
+          <li>تستعمل الـ AI يومياً في خدمتك بطريقة professional ديجا.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap me" aria-labelledby="who">
+    <h2 id="who">شكون باش يقرّيك</h2>
+    <p>أنا Feres Othman، ديفلوبر نخدم بالـ AI agents كل نهار. الفيديوات اللي تشوف فيهم على TikTok وInstagram مصنوعين كاملين بالـ AI، والسيستام اللي ينشرهم زادا. في الويكاند نوريك كيفاش نخدم بالحق، موش theory.</p>
+  </section>
+
+  <div class="wrap">
+    <aside class="later" aria-labelledby="later">
+      <span class="tape">من بعد</span>
+      <h3 id="later">الـ workshop الكامل</h3>
+      <p>8 سيانسات، كل وحدة ساعتين، على 4 جمعات، ندخلو فيه في الـ détails. الحجز موش محلول توّا. كان حضرت الويكاند، تكون أوّل واحد يعرف.</p>
+    </aside>
+  </div>
+
+  <section class="wrap" aria-labelledby="faq">
+    <h2 id="faq">أسئلة</h2>
+    <details><summary>لازمني نعرف نكودي؟</summary><p>الويكاند beginner friendly. كان تعرف الأساسيات خير، أما حتى كان مازلت تبدا باش تفهم الطريقة وتعرف خطوتك الجاية.</p></details>
+    <details><summary>لازمني subscription متاع Claude ولا حاجة أخرى؟</summary><p>لا. باش تحضر وتتبّع ما تحتاج حتى subscription. نحكيو على قدّاش يتكلّف كل tool باش تقرّر وحدك من بعد.</p></details>
+    <details><summary>وقتاش بالضبط؟</summary><p>الموعد نحدّدوه كي تتكمّل الدفعة الأولى. في الـ form تختار الأوقات اللي يناسبوك، ونكلّموك على واتساب بالتاريخ.</p></details>
+    <details><summary>كيفاش نخلّص؟</summary><p>توّا تحجز برك، ما تخلّص شي. كي تتكمّل الدفعة نبعثولك على واتساب، وتخلّص بـ virement ولا mandat.</p></details>
+    <details><summary>علاش نخلّص وثمّة tutorials بلاش؟</summary><p>الـ tutorials يوريوك tool. هوني تشوف واحد يخدم بيه في مشروع حقيقي، تسأل وقت ما تحب، وتهزّ معاك الملفات اللي نستعملهم أنا.</p></details>
+    <details><summary>السيانسات مسجّلين؟</summary><p>السيانسات لايف، باش تنجم تسأل. خير تحضر في الوقت.</p></details>
+  </section>
+
+  <section class="book" id="book" aria-labelledby="bookh">
+    <div class="wrap">
+      <h2 id="bookh">احجز بلاصتك</h2>
+      <p class="sub">دقيقة وتكمّل. ما تخلّص شي توّا.</p>
+      <form id="form" novalidate>
+        <div><label for="name">الاسم واللقب</label><input id="name" name="entry.91938125" type="text" autocomplete="name"></div>
+        <div><label for="phone">نومرو الواتساب <span class="req">*</span></label><input id="phone" name="entry.178368777" type="tel" inputmode="tel" autocomplete="tel" placeholder="98 123 456" required></div>
+        <fieldset><legend>شنوّة وضعيتك توّا؟ <span class="req">*</span></legend>
+          <div class="opts">
+            <label><input type="radio" name="entry.2137076498" value="طالب" required><span>طالب</span></label>
+            <label><input type="radio" name="entry.2137076498" value="ديفلوبر نخدم"><span>ديفلوبر نخدم</span></label>
+            <label><input type="radio" name="entry.2137076498" value="نخدم في مجال آخر"><span>نخدم في مجال آخر</span></label>
+            <label><input type="radio" name="entry.2137076498" value="نلوّج على خدمة"><span>نلوّج على خدمة</span></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>شنوّة مستواك في البرمجة؟ <span class="req">*</span></legend>
+          <div class="opts">
+            <label><input type="radio" name="entry.470206187" value="عمري ما كوديت" required><span>عمري ما كوديت</span></label>
+            <label><input type="radio" name="entry.470206187" value="نعرف الأساسيات"><span>نعرف الأساسيات</span></label>
+            <label><input type="radio" name="entry.470206187" value="نكودي مشاريع صغار"><span>نكودي مشاريع صغار</span></label>
+            <label><input type="radio" name="entry.470206187" value="نكودي كل نهار"><span>نكودي كل نهار</span></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>وقتاش يناسبك؟ <span class="req">*</span></legend>
+          <div class="opts">
+            <label><input type="checkbox" name="entry.35911919" value="السبت الصباح"><span>السبت الصباح</span></label>
+            <label><input type="checkbox" name="entry.35911919" value="السبت العشية"><span>السبت العشية</span></label>
+            <label><input type="checkbox" name="entry.35911919" value="الأحد الصباح"><span>الأحد الصباح</span></label>
+            <label><input type="checkbox" name="entry.35911919" value="الأحد العشية"><span>الأحد العشية</span></label>
+          </div>
+        </fieldset>
+        <div id="source-field"><label for="source">منين سمعت بينا؟</label>
+          <select id="source" name="entry.2000322151">
+            <option value="">اختار</option>
+            <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>صاحبي قالي</option>
+          </select>
+        </div>
+        <div><label for="build">شنوّة تحبّ تبني بالـ AI؟</label><textarea id="build" name="entry.347514487" rows="2"></textarea></div>
+        <label class="consent"><input type="checkbox" name="entry.1586036539" value="إي، موافق" required><span>موافق نكلّموك على واتساب بخصوص السيشن&nbsp;<span class="req">*</span></span></label>
+        <!-- Trap for bots: hidden from people, so anything typed here means a bot filled the form. -->
+        <div class="trap" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <input type="hidden" name="entry.744655579" value="إي، نحب نحجز بلاصتي">
+        <p class="error" id="error" role="alert"></p>
+        <button class="cta" type="submit">احجز بلاصتي</button>
+      </form>
+      <div class="done" role="status">
+        <span class="tape">تسجّلت ✓</span>
+        <h3>بلاصتك محجوزة</h3>
+        <p>كي تتكمّل الدفعة الأولى نكلّموك على واتساب بالتاريخ وطريقة الخلاص.</p>
+        <p id="test-note" style="color:#BBAABF"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="sign">إنت تفكّر، والـ <span class="en">agent</span> يكودي</div>
+    <div>Feres Othman · <a href="../privacy.html">Privacy</a></div>
+  </div>
+</footer>
+
+<script>
+// The hero terminal: types the method once, then stays. Shown complete when motion is reduced.
+(() => {
+  const lines = [
+    ['<span class="k">></span> build a habit tracker with streaks', 0],
+    ['<span class="dim">● plan</span>     3 screens, no login', 900],
+    ['<span class="dim">● instruct</span> writing 4 files', 700],
+    ['<span class="dim">● review</span>   reset at midnight? <span class="k">ask you</span>', 900],
+    ['<span class="dim">● fix</span>      test failed → fixed', 900],
+    ['<span class="ok">✓ done</span>     you think, it codes', 800],
+  ];
+  const el = document.getElementById("term");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) { el.innerHTML = lines.map((l) => l[0]).join("\n"); return; }
+  let i = 0;
+  const caret = '<span class="caret"></span>';
+  const next = () => {
+    if (i >= lines.length) return;
+    el.innerHTML = lines.slice(0, i + 1).map((l) => l[0]).join("\n") + " " + caret;
+    i++;
+    if (i < lines.length) setTimeout(next, lines[i][1]);
+  };
+  setTimeout(next, 500);
+})();
+
+// Booking: answers go straight into the existing Google Form, so the app's waitlist keeps working.
+(() => {
+  const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdIwU1mwuVR3CbM7GlMdnrCq710l12uWKF546X9Bj3M8dgp0A/formResponse";
+  const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube" };
+  const form = document.getElementById("form");
+  const error = document.getElementById("error");
+  const src = SOURCES[new URLSearchParams(location.search).get("src")];
+  if (src) { document.getElementById("source").value = src; document.getElementById("source-field").hidden = true; }
+  // A local draft never sends anything to the real form.
+  const openedAt = Date.now();
+  const testMode = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    // A bot filled the hidden field, or sent the form faster than a person can: show success, send nothing.
+    const bot = data.get("website") || Date.now() - openedAt < 4000;
+    data.delete("website");
+    const phone = (data.get("entry.178368777") || "").replace(/\s+/g, "");
+    let msg = "";
+    if (!/^(\+?216)?\d{8}$/.test(phone) && !/^\+\d{8,15}$/.test(phone)) msg = "اكتب نومرو واتساب صحيح (8 أرقام).";
+    else if (!data.get("entry.2137076498")) msg = "اختار وضعيتك توّا.";
+    else if (!data.get("entry.470206187")) msg = "اختار مستواك في البرمجة.";
+    else if (!data.getAll("entry.35911919").length) msg = "اختار وقت واحد على الأقل يناسبك.";
+    else if (!data.get("entry.1586036539")) msg = "لازم توافق باش نكلّموك على واتساب.";
+    error.textContent = msg;
+    if (msg) return;
+    const button = form.querySelector("button");
+    button.disabled = true;
+    button.textContent = "قاعد نحجز…";
+    try {
+      if (testMode) document.getElementById("test-note").textContent = "نسخة تجربة: ما تبعث شي للـ form الحقيقي.";
+      else if (!bot) await fetch(FORM, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+      document.getElementById("book").classList.add("sent");
+      document.getElementById("book").scrollIntoView({ block: "start" });
+    } catch {
+      error.textContent = "ما تبعثش. ثبّت في الكونكسيون وعاود.";
+      button.disabled = false;
+      button.textContent = "احجز بلاصتي";
+    }
+  });
+})();
+</script>
+</body>
+</html>
