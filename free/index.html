@@ -220,7 +220,7 @@ body.unlocked .locked-only { display: none; }
       <span class="bar-days" id="bar-days"></span>
     </div>
     <p class="gift">🎁 احجز، وتنجم تكون إنت اللي يربح شهر Claude بلاش!</p>
-    <p class="bar-urgent" id="bar-urgent">البلايص محدودة. كي تعمّر، الحجز يتسكّر، وما فمّاش موعد آخر محدّد.</p>
+    <p class="bar-urgent" id="bar-urgent">🔥 البلايص قاعدة تكمل. كي تعمّر، الحجز يتسكّر، وما فمّاش موعد آخر محدّد.</p>
     <p>آخر أجل للحجز: الجمعة 20 نوفمبر.</p>
     <a class="bar-cta" id="bar-cta" href="../session/#book">احجز بلاصتك</a>
   </div>
@@ -248,7 +248,7 @@ body.unlocked .locked-only { display: none; }
       <span class="tape">🎁 الـ workshop</span>
       <h2 id="gifth">شهر <span class="en">Claude</span> بلاش لواحد من الطلبة</h2>
       <p>السبت 21 والأحد 22 نوفمبر: نبني app حقيقي لايف مع الـ agent، ونفسّر كل خطوة. وفي آخر سيانس الأحد، واحد من اللي حضرو يربح شهر Claude بلاش.</p>
-      <p>البلايص محدودة، وما فمّاش موعد آخر محدّد.</p>
+      <p>البلايص قاعدة تكمل، وما فمّاش موعد آخر محدّد.</p>
       <a class="cta" id="to-workshop-gift" href="../session/#book">احجز بلاصتك</a>
     </div>
   </section>
@@ -311,7 +311,7 @@ body.unlocked .locked-only { display: none; }
 
     <div class="next">
       <h3>تحب تشوفهم يخدمو على app حقيقي؟</h3>
-      <p>السبت 21 والأحد 22 نوفمبر، نبني app لايف مع الـ agent، ونستعملو الـ prompts هاذوما واحد بواحد: plan، instruct، review، fix. البلايص محدودة، وفي الآخر واحد من الطلبة يربح شهر Claude بلاش.</p>
+      <p>السبت 21 والأحد 22 نوفمبر، نبني app لايف مع الـ agent، ونستعملو الـ prompts هاذوما واحد بواحد: plan، instruct، review، fix. البلايص قاعدة تكمل، وفي الآخر واحد من الطلبة يربح شهر Claude بلاش.</p>
       <a class="cta" id="to-workshop" href="../session/#book">احجز بلاصتك في الـ workshop</a>
     </div>
   </section>
@@ -330,7 +330,7 @@ function barState(s) {
   if (!s) return;
   const line = document.getElementById("bar-urgent");
   if (s.full) line.textContent = "البلايص عمّرت. تنجم تحجز في الـ list متاع الانتظار، وكان تتفسّخ بلاصة نكلّموك.";
-  else if (s.low) line.textContent = "⚠️ البلايص قربو يكملو. كي تعمّر، الحجز يتسكّر، وما فمّاش موعد آخر محدّد.";
+  else if (s.low) line.textContent = "⚠️ باقي شوية بلايص برك. كي تعمّر، الحجز يتسكّر، وما فمّاش موعد آخر محدّد.";
 }
 
 // The workshop bar: days left, then the real state of bookings (session/seats.json, published by tools/seats.mjs).
