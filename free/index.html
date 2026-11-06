@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Free prompt pack · Feres Othman</title>
-<meta name="description" content="الـ prompts والـ templates اللي نستعملهم كل نهار مع الـ AI agents، بلاش. Plan، review، debug، CLAUDE.md وأكثر.">
+<meta name="description" content="الـ skill file اللي نعمل بيها review قبل كل commit، والـ prompts والـ templates اللي نستعملهم كل نهار مع الـ AI agents، بلاش. Plan، review، debug، CLAUDE.md وأكثر.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Lalezar&display=swap" rel="stylesheet">
@@ -171,19 +171,49 @@ body.unlocked .locked-only { display: none; }
 .book .done { display: none; }
 .book.sent form { display: none; }
 .book.sent .done { display: block; }
+
+/* Workshop bar: top of every page. Real facts only: the seat count appears only once it comes from real bookings. */
+.bar { background: linear-gradient(135deg, #C9739F, #8E3F73); color: #fff; padding: 16px 0 18px; }
+.bar-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 4px 14px; }
+.bar-date { font: 400 clamp(23px, 5.6vw, 30px)/1.25 var(--display); }
+.bar-days { font: 700 15px var(--body); background: #fff; color: #7A2F60; border-radius: 999px; padding: 3px 13px; white-space: nowrap; }
+.bar p { margin: 8px 0 0; font-size: 15.5px; line-height: 1.6; }
+.bar .gift { font-weight: 700; }
+.bar-seats { margin-top: 10px; font: 700 15px var(--body); }
+.bar-track { height: 9px; margin-top: 5px; border-radius: 99px; background: rgba(255, 255, 255, .3); overflow: hidden; }
+.bar-track i { display: block; height: 100%; background: #fff; border-radius: 99px; }
+.bar-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; margin-top: 12px; padding: 0 24px; border-radius: 12px; background: #fff; color: #7A2F60; font: 400 20px var(--display); text-decoration: none; }
+.bar-cta:active { transform: scale(.97); }
+.card.star { border: 2px solid var(--orchid); box-shadow: 0 14px 34px rgba(201, 115, 159, .28); }
+.card-how { padding: 0 18px; margin: 0 0 10px; font-size: 15px; }
+.card-how code { font: 500 13.5px var(--mono); direction: ltr; unicode-bidi: isolate; }
+.locked .star-row { font-weight: 700; color: #8E3F73; }
+.skill-get { margin: 0 18px 16px; }
 </style>
 </head>
 <body>
+
+<aside class="bar" id="bar" aria-label="الـ workshop">
+  <div class="wrap">
+    <div class="bar-head">
+      <div class="bar-date">الـ workshop: السبت 21 + الأحد 22 نوفمبر</div>
+      <span class="bar-days" id="bar-days"></span>
+    </div>
+    <p>30 بلاصة برك. الحجز يتسكّر الجمعة 20 نوفمبر، ولا قبل كان البلايص عمّرت. وما فمّاش موعد آخر محدّد من بعدها.</p>
+    <div class="bar-seats" id="bar-seats" hidden><span id="bar-seats-text"></span><div class="bar-track"><i id="bar-fill"></i></div></div>
+    <p class="gift">🎁 في آخر الـ workshop، واحد من الطلبة يربح شهر Claude مخلّص.</p>
+    <a class="bar-cta" id="bar-cta" href="../session/#book">احجز بلاصتك</a>
+  </div>
+</aside>
 
 <header class="hero">
   <div class="wrap">
     <div class="top"><b>Feres Othman</b><span>الـ <span class="en">agentic coding</span> بالتونسي</span></div>
     <span class="tape">free pack</span>
-    <h1>الـ prompts اللي نستعملهم كل نهار مع الـ <span class="agent en">AI agent</span>، بلاش</h1>
-    <p class="lead">نفس الـ prompts والـ templates اللي تشوفهم في الفيديوات، في بلاصة وحدة، جاهزين للـ copy. زوز تشوفهم توّا، والباقي بعد ما تكتب نومروك.</p>
+    <h1>الـ skill file اللي نعمل بيها review قبل كل <span class="agent en">commit</span>، بلاش</h1>
+    <p class="lead">تحطّها في الـ project، تكتب <span class="en">/review-diff</span>، والـ agent يقلّب الـ changes متاعك قبل ما تعمل commit. ومعاها الـ prompts والـ templates اللي نستعملهم، جاهزين للـ copy. زوز prompts تشوفهم توّا، والباقي بعد ما تكتب نومروك.</p>
     <a class="cta" href="#get">خوذ الـ pack كامل</a>
-    <span class="cta-note">ما تخلّص شي. نبعثولك على واتساب كان يتحدّد موعد الـ workshop برك.</span>
-    <span class="cta-note">جاي للـ workshop؟ <a id="to-workshop-top" href="../session/#book">احجز بلاصتك هوني</a></span>
+    <span class="cta-note">ما تخلّص شي. نكلّموك على واتساب بخصوص الـ workshop برك.</span>
   </div>
 </header>
 
@@ -203,7 +233,7 @@ body.unlocked .locked-only { display: none; }
   <section class="book" id="get" aria-labelledby="geth">
     <div class="wrap">
       <h2 id="geth">خوذ الـ pack كامل</h2>
-      <p class="sub">نص دقيقة. يتحلّ قدّامك هوني، توّا.</p>
+      <p class="sub">نص دقيقة. الـ skill file والـ pack الكل يتحلّو قدّامك هوني، توّا.</p>
       <form id="form" novalidate>
         <div><label for="name">الاسم</label><input id="name" name="entry.91938125" type="text" autocomplete="name"></div>
         <div><label for="phone">نومرو الواتساب <span class="req">*</span></label><input id="phone" name="entry.178368777" type="tel" inputmode="tel" autocomplete="tel" placeholder="98 123 456" required></div>
@@ -229,7 +259,7 @@ body.unlocked .locked-only { display: none; }
             <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>صاحبي قالي</option>
           </select>
         </div>
-        <label class="consent"><input type="checkbox" name="entry.1586036539" value="إي، موافق" required><span>موافق نكلّموك على واتساب كي يتحدّد موعد الـ workshop&nbsp;<span class="req">*</span></span></label>
+        <label class="consent"><input type="checkbox" name="entry.1586036539" value="إي، موافق" required><span>موافق نكلّموك على واتساب بخصوص الـ workshop&nbsp;<span class="req">*</span></span></label>
         <!-- Trap for bots: hidden from people, so anything typed here means a bot filled the form. -->
         <div class="trap" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
         <input type="hidden" name="entry.744655579" value="حبّيت الـ free pack، كلّموني كي يتحدّد الموعد">
@@ -251,7 +281,7 @@ body.unlocked .locked-only { display: none; }
 
     <div class="next">
       <h3>تحب تشوفهم يخدمو على app حقيقي؟</h3>
-      <p>في الـ workshop نبني app لايف مع الـ agent، ونستعملو الـ prompts هاذوما واحد بواحد: plan، instruct، review، fix. وتسأل وقت ما تحب.</p>
+      <p>السبت 21 والأحد 22 نوفمبر، نبني app لايف مع الـ agent، ونستعملو الـ prompts هاذوما واحد بواحد: plan، instruct، review، fix. 30 بلاصة برك، وفي الآخر واحد من الطلبة يربح شهر Claude مخلّص.</p>
       <a class="cta" id="to-workshop" href="../session/#book">احجز بلاصتك في الـ workshop</a>
     </div>
   </section>
@@ -265,6 +295,33 @@ body.unlocked .locked-only { display: none; }
 </footer>
 
 <script>
+// The workshop bar: days left, and real bookings once there are enough (site/session/seats.json, published by tools/seats.mjs).
+(() => {
+  const start = Date.parse("2026-11-21T00:00:00+01:00");
+  const end = Date.parse("2026-11-23T00:00:00+01:00");
+  const now = Date.now();
+  if (now >= end) { document.getElementById("bar").hidden = true; return; }
+  const left = Math.ceil((start - now) / 864e5);
+  document.getElementById("bar-days").textContent = left <= 0 ? "اليوم" : left === 1 ? "غدوة" : left === 2 ? "باقي نهارين" : left <= 10 ? `باقي ${left} أيّام` : `باقي ${left} نهار`;
+  const key = new URLSearchParams(location.search).get("src");
+  if (true && key) document.getElementById("bar-cta").href = `../session/?src=${encodeURIComponent(key)}#book`;
+  fetch("../session/seats.json?t=" + Math.floor(now / 6e5)).then((r) => (r.ok ? r.json() : null)).then((s) => {
+    if (!s || !(s.booked >= 10)) return;
+    const CAP = 30;
+    document.getElementById("bar-seats").hidden = false;
+    document.getElementById("bar-seats-text").textContent = s.booked >= CAP ? "البلايص عمّرت: تنجم تحجز في الـ list متاع الانتظار" : `${s.booked} من ${CAP} حجزو بلايصهم`;
+    document.getElementById("bar-fill").style.width = Math.min(100, (s.booked / CAP) * 100) + "%";
+  }).catch(() => {});
+})();
+
+// Counts one visit per browser session in a private Google Form: the page and the platform, nothing about the person.
+(() => {
+  if (location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname) || navigator.webdriver) return;
+  try { if (sessionStorage.getItem("seen:free")) return; sessionStorage.setItem("seen:free", "1"); } catch {}
+  const source = new URLSearchParams(location.search).get("src") || "direct";
+  fetch("https://docs.google.com/forms/d/e/1FAIpQLSfxngQeJQKwBG8_F7s5b5tQQlUpyyaSgSxdhaLuPxVBp6eOdQ/formResponse", { method: "POST", mode: "no-cors", body: new URLSearchParams({ "entry.1680650754": "free", "entry.2039147925": source }) }).catch(() => {});
+})();
+
 // The pack. Each item: a Derja line on why it helps, and the text to copy. The first two are shown to everyone.
 const ITEMS = [
   { title: "Plan قبل الـ code", why: "ما يبداش يكتب على عماها: يسألك، يعطيك plan، ويستنّى الـ OK متاعك.", text: "Don't write any code yet.\nAsk me the questions you need answered first,\nthen give me a step-by-step plan.\nWait for my OK before you start." },
@@ -277,14 +334,30 @@ const ITEMS = [
   { title: "Claude Code shortcuts", why: "الخمسة اللي نستعملهم أكثر.", text: "Shift+Tab   → plan mode\n@file       → point at the exact file\n!command    → run it, the agent sees the output\n/btw        → side question, not added to the chat\nEsc Esc     → rewind (code back to a checkpoint)" },
 ];
 const OPEN = 2;
+// The highlight of the pack: a real skill file, with its own download.
+const SKILL = { title: "⭐ Skill file: review-diff", why: "الـ skill اللي نعمل بيها review قبل ما نعمل commit: تقلّب الـ changes الكل، وترتّبلك المشاكل من الأخطر للأخف.", how: true, star: true, file: "SKILL.md", text: "---\nname: review-diff\ndescription: Review my current git changes before I commit\n---\n\n# Review Local Git Changes\n\nYou are reviewing local git changes for code quality, security, and adherence to project standards.\n\n## Current Changes\n\n### Staged changes:\n!`git diff --staged`\n\n### Unstaged changes:\n!`git diff`\n\n### Changed files:\n!`git status --short`\n\n## Review Instructions\n\nAnalyze every changed file and provide a structured review. For each issue found, reference the specific file and line.\n\n**Critical (must fix before committing):**\n- Security vulnerabilities (XSS, injection, exposed secrets, missing validation)\n- Type safety holes (unsafe casts, `any`, values assumed to exist)\n- Missing validation of inputs and of what the code sends back\n- Breaking changes to existing APIs or interfaces\n\n**Errors (should fix):**\n- Missing error handling for async operations\n- Missing loading and empty states in the UI\n- Imports that don't follow the project's pattern\n- Functions whose purpose isn't clear without documentation\n\n**Warnings (consider fixing):**\n- Code duplication that could be extracted\n- Overly complex logic that could be simplified\n- Missing edge case handling\n- Inconsistent naming conventions\n\n**Suggestions (nice to have):**\n- Performance improvements\n- Better variable and function names\n- Structural improvements\n\n### Output Format\n\nFor each issue:\n[SEVERITY] file:line - Description\n  Suggestion: How to fix it\n\nEnd with a summary:\n- Total issues by severity\n- Overall assessment (ready to commit / needs fixes)\n- List of files that are clean\n" };
 
 const card = (it) => {
   const el = document.createElement("article");
-  el.className = "card";
+  el.className = it.star ? "card star" : "card";
   el.innerHTML = `<div class="card-head"><h3></h3><button class="copy" type="button">Copy</button></div><p class="card-why"></p><pre></pre>`;
   el.querySelector("h3").textContent = it.title;
   el.querySelector(".card-why").textContent = it.why;
   el.querySelector("pre").textContent = it.text;
+  if (it.how) el.querySelector(".card-why").insertAdjacentHTML("afterend", '<p class="card-how">حطّها في <code>.claude/skills/review-diff/SKILL.md</code>، ومن بعد اكتب <code>/review-diff</code> في Claude Code.</p>');
+  if (it.file) {
+    const dl = document.createElement("button");
+    dl.className = "copy skill-get";
+    dl.type = "button";
+    dl.textContent = "Download " + it.file;
+    dl.addEventListener("click", () => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([it.text], { type: "text/markdown" }));
+      a.download = it.file;
+      a.click();
+    });
+    el.appendChild(dl);
+  }
   const b = el.querySelector(".copy");
   b.addEventListener("click", async () => {
     try { await navigator.clipboard.writeText(it.text); b.textContent = "Copied ✓"; b.classList.add("ok"); setTimeout(() => { b.textContent = "Copy"; b.classList.remove("ok"); }, 1600); } catch { b.textContent = "Select + copy"; }
@@ -294,16 +367,16 @@ const card = (it) => {
 const openBox = document.getElementById("open-items");
 ITEMS.slice(0, OPEN).forEach((it) => openBox.appendChild(card(it)));
 const lockedList = document.getElementById("locked-list");
-ITEMS.slice(OPEN).forEach((it) => { const li = document.createElement("li"); li.innerHTML = `<span class="lock">🔒</span><span></span>`; li.lastChild.textContent = it.title; lockedList.appendChild(li); });
+[SKILL, ...ITEMS.slice(OPEN)].forEach((it) => { const li = document.createElement("li"); li.innerHTML = `<span class="lock">🔒</span><span></span>`; li.lastChild.textContent = it.title; if (it.star) li.className = "star-row"; lockedList.appendChild(li); });
 
 const unlock = () => {
   if (document.body.classList.contains("unlocked")) return;
   const all = document.getElementById("all-items");
-  ITEMS.forEach((it) => all.appendChild(card(it)));
+  [SKILL, ...ITEMS].forEach((it) => all.appendChild(card(it)));
   document.body.classList.add("unlocked");
 };
 document.getElementById("download").addEventListener("click", () => {
-  const md = "# Feres Othman · free prompt pack\n\n" + ITEMS.map((it) => `## ${it.title}\n\n${it.why}\n\n\`\`\`\n${it.text}\n\`\`\`\n`).join("\n");
+  const md = "# Feres Othman · free prompt pack\n\n" + [SKILL, ...ITEMS].map((it) => `## ${it.title}\n\n${it.why}\n\n\`\`\`\n${it.text}\n\`\`\`\n`).join("\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([md], { type: "text/markdown" }));
   a.download = "feres-prompt-pack.md";
@@ -314,7 +387,7 @@ document.getElementById("download").addEventListener("click", () => {
 const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube" };
 const srcKey = new URLSearchParams(location.search).get("src");
 const src = SOURCES[srcKey];
-if (src) { document.getElementById("source").value = src; document.getElementById("source-field").hidden = true; document.getElementById("to-workshop").href = `../session/?src=${srcKey}#book`; document.getElementById("to-workshop-top").href = `../session/?src=${srcKey}#book`; }
+if (src) { document.getElementById("source").value = src; document.getElementById("source-field").hidden = true; document.getElementById("to-workshop").href = `../session/?src=${srcKey}#book`; }
 
 // Someone who already unlocked it on this browser sees the pack straight away.
 try { if (localStorage.getItem("pack") === "1") { unlock(); document.getElementById("get").classList.add("sent"); } } catch {}
