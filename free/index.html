@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free prompt pack · Feres Othman</title>
+<meta name="description" content="الـ prompts والـ templates اللي نستعملهم كل نهار مع الـ AI agents، بلاش. Plan، review، debug، CLAUDE.md وأكثر.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@500;700&family=Lalezar&display=swap" rel="stylesheet">
+<style>
+:root {
+  --plum: #2B1531;
+  --deep: #1A0C1E;
+  --paper: #F1ECF3;
+  --orchid: #C9739F;
+  --mint: #57C29A;
+  --tape: #EADCC8;
+  --muted: #6E5A72;
+  --line: #DCD2DF;
+  --display: "Lalezar", "IBM Plex Sans Arabic", sans-serif;
+  --body: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--paper); color: var(--plum); font: 17px/1.75 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--orchid); outline-offset: 3px; border-radius: 4px; }
+.wrap { width: min(680px, 100% - 40px); margin-inline: auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.25; margin: 0; }
+h2 { font-size: clamp(30px, 6vw, 40px); margin-bottom: 18px; }
+p { margin: 0 0 14px; }
+.en { unicode-bidi: isolate; direction: ltr; display: inline-block; }
+
+/* Tape labels: the one device carried over from the videos. */
+.tape { display: inline-block; background: var(--tape); color: var(--plum); font-family: var(--display); font-size: 20px; line-height: 1.2; padding: 4px 14px; transform: rotate(-2.5deg); box-shadow: 0 6px 14px rgba(26, 12, 30, .18); }
+.tape.dark { background: var(--plum); color: var(--tape); }
+
+/* Hero */
+.hero { background: radial-gradient(120% 80% at 70% 0%, #43213F 0%, var(--plum) 55%, var(--deep) 100%); color: var(--paper); padding: 28px 0 64px; overflow: hidden; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 44px; font-size: 15px; color: #CDBFD0; }
+.top b { font-family: var(--display); font-weight: 400; font-size: 20px; color: var(--paper); }
+.hero h1 { font-size: clamp(40px, 9vw, 64px); margin: 18px 0 14px; }
+.hero h1 .agent { color: var(--orchid); }
+.hero .lead { font-size: 19px; color: #DCD0DF; max-width: 34em; }
+.term { margin: 34px 0 30px; background: var(--deep); border: 1px solid #4A2A4C; border-radius: 16px; box-shadow: 0 30px 60px rgba(0, 0, 0, .45); direction: ltr; text-align: left; overflow: hidden; }
+.term-bar { display: flex; gap: 8px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #3A1F3C; font: 500 13px var(--mono); color: #9C88A0; }
+.term-bar i { width: 11px; height: 11px; border-radius: 50%; background: #5B3A5D; }
+.term-bar span { margin-left: 8px; }
+.term pre { margin: 0; padding: 18px 18px 22px; min-height: 200px; font: 500 clamp(12.5px, 3.4vw, 15px)/1.8 var(--mono); color: #E9DFEB; white-space: pre-wrap; }
+.term .k { color: var(--orchid); }
+.term .ok { color: var(--mint); }
+.term .dim { color: #8E7A92; }
+.caret { display: inline-block; width: 8px; height: 1.1em; background: var(--orchid); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.cta { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 30px; border-radius: 14px; background: var(--orchid); color: #fff; font: 400 23px var(--display); text-decoration: none; border: 0; cursor: pointer; transition: transform .12s; }
+.cta:active { transform: scale(.97); }
+.cta-note { display: block; margin-top: 10px; font-size: 15px; color: #BBAABF; }
+
+/* Ticket: the facts of the session */
+.ticket { position: relative; margin-top: -30px; background: #fff; border-radius: 18px; box-shadow: 0 18px 40px rgba(43, 21, 49, .14); display: grid; grid-template-columns: repeat(2, 1fr); }
+.ticket div { padding: 18px 20px; border-top: 1px dashed var(--line); }
+.ticket div:nth-child(-n+2) { border-top: 0; }
+.ticket div:nth-child(odd) { border-left: 1px dashed var(--line); }
+.ticket small { display: block; color: var(--muted); font-size: 14px; }
+.ticket strong { font-family: var(--display); font-weight: 400; font-size: 24px; }
+.ticket .tape { position: absolute; top: -16px; left: 18px; }
+
+section { padding: 64px 0 0; }
+
+/* Method: a real sequence, so it is numbered. */
+.steps { list-style: none; padding: 0; margin: 22px 0 0; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 14px 0; border-top: 1px solid var(--line); }
+.steps li::before { content: counter(s); font: 400 34px/1 var(--display); color: var(--orchid); }
+.steps b { display: block; font-family: var(--display); font-weight: 400; font-size: 22px; }
+.steps span { color: var(--muted); }
+.also { margin: 22px 0 0; padding: 0; list-style: none; }
+.also li { padding: 8px 26px 8px 0; position: relative; }
+.also li::before { content: ""; position: absolute; right: 4px; top: 19px; width: 9px; height: 9px; border-radius: 2px; background: var(--orchid); transform: rotate(45deg); }
+
+/* Take-home: shown as the folder you leave with. */
+.files { margin-top: 20px; background: var(--deep); color: #E9DFEB; border-radius: 16px; padding: 20px 22px; direction: ltr; text-align: left; font: 500 clamp(13px, 3.6vw, 15px)/2 var(--mono); }
+.files .dir { color: var(--orchid); }
+.files .note { color: #8E7A92; }
+.files-ar { margin-top: 14px; color: var(--muted); }
+
+.fit { display: grid; gap: 16px; margin-top: 8px; }
+.fit div { background: #fff; border-radius: 16px; padding: 20px 22px; }
+.fit h3 { font-size: 22px; margin-bottom: 8px; }
+.fit ul { margin: 0; padding-right: 20px; }
+.fit li { margin: 4px 0; }
+.fit .no { background: transparent; border: 1px solid var(--line); }
+
+.me { display: grid; gap: 6px; }
+.me p { color: #3F2B44; }
+
+.later { margin-top: 64px; border: 2px dashed var(--line); border-radius: 18px; padding: 22px; }
+.later h3 { font-size: 24px; margin: 12px 0 6px; }
+.later p { margin: 0; color: var(--muted); }
+
+details { border-top: 1px solid var(--line); padding: 14px 0; }
+details:last-of-type { border-bottom: 1px solid var(--line); }
+summary { cursor: pointer; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 400 26px/1 var(--display); color: var(--orchid); transition: transform .2s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { margin: 10px 0 0; color: #3F2B44; }
+
+/* Booking form */
+.book { margin-top: 64px; background: var(--plum); color: var(--paper); padding: 56px 0 64px; }
+.book h2 { margin-bottom: 6px; }
+.book .sub { color: #CDBFD0; margin-bottom: 26px; }
+form { display: grid; gap: 22px; }
+label, legend { font-weight: 700; display: block; margin-bottom: 8px; }
+.req { color: var(--orchid); }
+input[type=text], input[type=tel], textarea, select { width: 100%; font: 17px var(--body); color: var(--plum); background: var(--paper); border: 2px solid transparent; border-radius: 12px; padding: 12px 14px; }
+input:focus, textarea:focus, select:focus { border-color: var(--orchid); outline: none; }
+input[type=tel] { direction: ltr; text-align: right; }
+fieldset { border: 0; padding: 0; margin: 0; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opts label { margin: 0; font-weight: 500; }
+.opts input { position: absolute; opacity: 0; pointer-events: none; }
+.opts span { display: inline-block; padding: 9px 16px; border-radius: 999px; border: 2px solid #5A3A5E; cursor: pointer; transition: background .15s, border-color .15s; }
+.opts input:checked + span { background: var(--orchid); border-color: var(--orchid); color: #fff; }
+.opts input:focus-visible + span { outline: 3px solid var(--tape); outline-offset: 2px; }
+.consent { display: flex; gap: 12px; align-items: flex-start; font-weight: 500; }
+.consent input { width: 22px; height: 22px; margin-top: 4px; accent-color: var(--orchid); flex: none; }
+.trap { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.error { color: #FFB3C8; font-weight: 500; min-height: 1.6em; margin: 0; }
+.done { display: none; text-align: center; padding: 30px 0; }
+.done h3 { font-size: 34px; margin: 16px 0 8px; }
+.book.sent form { display: none; }
+.book.sent .done { display: block; }
+
+footer { background: var(--deep); color: #9C88A0; padding: 34px 0; font-size: 15px; }
+footer .sign { font-family: var(--display); font-size: 26px; color: var(--paper); margin-bottom: 6px; }
+
+@media (min-width: 640px) {
+  .fit { grid-template-columns: 1fr 1fr; }
+  .ticket { grid-template-columns: repeat(4, 1fr); }
+  .ticket div { border-top: 0; }
+  .ticket div:not(:last-child) { border-left: 1px dashed var(--line); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .caret { animation: none; }
+}
+
+/* Free pack */
+.pack { display: grid; gap: 16px; margin: 8px 0 10px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 26px rgba(43, 21, 49, .06); }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px 4px; }
+.card-head h3 { font-size: 22px; }
+.card-why { padding: 0 18px; margin: 0 0 10px; color: var(--muted); font-size: 15.5px; }
+.card pre { margin: 0; padding: 16px 18px; background: var(--deep); color: #E9DFEB; font: 500 14px/1.75 var(--mono); direction: ltr; text-align: left; white-space: pre-wrap; word-break: break-word; }
+.copy { flex: none; min-height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--plum); font: 500 14px var(--body); cursor: pointer; }
+.copy.ok { background: var(--mint); border-color: var(--mint); color: #0d2a1f; }
+.locked { position: relative; display: grid; gap: 10px; padding: 20px; border: 2px dashed var(--line); border-radius: 16px; background: #fff; }
+.locked li { list-style: none; display: flex; gap: 10px; align-items: baseline; }
+.locked ul { margin: 0; padding: 0; display: grid; gap: 8px; }
+.locked .lock { font-size: 18px; }
+.unlocked-only { display: none; }
+body.unlocked .unlocked-only { display: block; }
+body.unlocked .locked-only { display: none; }
+.next { margin-top: 26px; padding: 22px; border-radius: 18px; background: var(--plum); color: var(--paper); }
+.next h3 { font-size: 26px; margin-bottom: 8px; }
+.next p { color: #DCD0DF; }
+.dl { margin-top: 6px; background: transparent; border: 2px solid var(--orchid); color: var(--plum); }
+.book .done { display: none; }
+.book.sent form { display: none; }
+.book.sent .done { display: block; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="top"><b>Feres Othman</b><span>الـ <span class="en">agentic coding</span> بالتونسي</span></div>
+    <span class="tape">free pack</span>
+    <h1>الـ prompts اللي نستعملهم كل نهار مع الـ <span class="agent en">AI agent</span>، بلاش</h1>
+    <p class="lead">نفس الـ prompts والـ templates اللي تشوفهم في الفيديوات، في بلاصة وحدة، جاهزين للـ copy. زوز تشوفهم توّا، والباقي بعد ما تكتب نومروك.</p>
+    <a class="cta" href="#get">خوذ الـ pack كامل</a>
+    <span class="cta-note">ما تخلّص شي. نبعثولك على واتساب كان يتحدّد موعد الـ workshop برك.</span>
+    <span class="cta-note">جاي للـ workshop؟ <a id="to-workshop-top" href="../session/#book">احجز بلاصتك هوني</a></span>
+  </div>
+</header>
+
+<main>
+  <section class="wrap" aria-labelledby="preview">
+    <h2 id="preview">زوز توّا</h2>
+    <div class="pack" id="open-items"></div>
+  </section>
+
+  <section class="wrap locked-only" aria-labelledby="inside">
+    <h2 id="inside">والباقي في الـ pack</h2>
+    <div class="locked">
+      <ul id="locked-list"></ul>
+    </div>
+  </section>
+
+  <section class="book" id="get" aria-labelledby="geth">
+    <div class="wrap">
+      <h2 id="geth">خوذ الـ pack كامل</h2>
+      <p class="sub">نص دقيقة. يتحلّ قدّامك هوني، توّا.</p>
+      <form id="form" novalidate>
+        <div><label for="name">الاسم</label><input id="name" name="entry.91938125" type="text" autocomplete="name"></div>
+        <div><label for="phone">نومرو الواتساب <span class="req">*</span></label><input id="phone" name="entry.178368777" type="tel" inputmode="tel" autocomplete="tel" placeholder="98 123 456" required></div>
+        <fieldset><legend>شنوّة وضعيتك توّا؟ <span class="req">*</span></legend>
+          <div class="opts">
+            <label><input type="radio" name="entry.2137076498" value="طالب" required><span>طالب</span></label>
+            <label><input type="radio" name="entry.2137076498" value="ديفلوبر نخدم"><span>ديفلوبر نخدم</span></label>
+            <label><input type="radio" name="entry.2137076498" value="نخدم في مجال آخر"><span>نخدم في مجال آخر</span></label>
+            <label><input type="radio" name="entry.2137076498" value="نلوّج على خدمة"><span>نلوّج على خدمة</span></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>مستواك في البرمجة؟ <span class="req">*</span></legend>
+          <div class="opts">
+            <label><input type="radio" name="entry.470206187" value="عمري ما كوديت" required><span>عمري ما كوديت</span></label>
+            <label><input type="radio" name="entry.470206187" value="نعرف الأساسيات"><span>نعرف الأساسيات</span></label>
+            <label><input type="radio" name="entry.470206187" value="نكودي مشاريع صغار"><span>نكودي مشاريع صغار</span></label>
+            <label><input type="radio" name="entry.470206187" value="نكودي كل نهار"><span>نكودي كل نهار</span></label>
+          </div>
+        </fieldset>
+        <div id="source-field"><label for="source">منين سمعت بينا؟</label>
+          <select id="source" name="entry.2000322151">
+            <option value="">اختار</option>
+            <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>صاحبي قالي</option>
+          </select>
+        </div>
+        <label class="consent"><input type="checkbox" name="entry.1586036539" value="إي، موافق" required><span>موافق نكلّموك على واتساب كي يتحدّد موعد الـ workshop&nbsp;<span class="req">*</span></span></label>
+        <!-- Trap for bots: hidden from people, so anything typed here means a bot filled the form. -->
+        <div class="trap" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <input type="hidden" name="entry.744655579" value="حبّيت الـ free pack، كلّموني كي يتحدّد الموعد">
+        <p class="error" id="error" role="alert"></p>
+        <button class="cta" type="submit">حلّلي الـ pack</button>
+      </form>
+      <div class="done" role="status">
+        <span class="tape">تحلّ ✓</span>
+        <h3>الـ pack كامل تحت</h3>
+        <p id="test-note" style="color:#BBAABF"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap unlocked-only" aria-labelledby="full">
+    <h2 id="full">الـ pack كامل</h2>
+    <div class="pack" id="all-items"></div>
+    <button class="cta dl" type="button" id="download">Download .md</button>
+
+    <div class="next">
+      <h3>تحب تشوفهم يخدمو على app حقيقي؟</h3>
+      <p>في الـ workshop نبني app لايف مع الـ agent، ونستعملو الـ prompts هاذوما واحد بواحد: plan، instruct، review، fix. وتسأل وقت ما تحب.</p>
+      <a class="cta" id="to-workshop" href="../session/#book">احجز بلاصتك في الـ workshop</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="sign">إنت تفكّر، والـ <span class="en">agent</span> يكودي</div>
+    <div>Feres Othman · <a href="../privacy.html">Privacy</a></div>
+  </div>
+</footer>
+
+<script>
+// The pack. Each item: a Derja line on why it helps, and the text to copy. The first two are shown to everyone.
+const ITEMS = [
+  { title: "Plan قبل الـ code", why: "ما يبداش يكتب على عماها: يسألك، يعطيك plan، ويستنّى الـ OK متاعك.", text: "Don't write any code yet.\nAsk me the questions you need answered first,\nthen give me a step-by-step plan.\nWait for my OK before you start." },
+  { title: "Review قبل ما تعمل accept", why: "done موش معناها يمشي. خلّيه يشوف الـ diff متاعو كيف reviewer.", text: "Review your own diff:\n1. What did you change?\n2. What could break?\n3. What should be deleted?\nChange nothing until I reply." },
+  { title: "Debug بالـ error كاملة", why: "عوض ما يخمّن ويبدّل في بلايص غالطة، يلقى السبب الأوّل.", text: "Here is the full error and the logs:\n[paste]\n\nI was doing: ...\nI expected: ...\n\nExplain the cause before you change any code." },
+  { title: "ما يقلّكش ديما yes", why: "يحبس الـ \"You're absolutely right!\" ويورّيك وين ممكن تكون غالط.", text: "Don't just agree with me.\nBefore any change, tell me where I might be wrong, and why." },
+  { title: "Project كبير؟ split", why: "feature وحدة في كل step، وكل step عندها test.", text: "Don't write any code yet.\nPlan this project as features.\nOne feature per step,\neach step with its test." },
+  { title: "CLAUDE.md template", why: "ملف واحد في الـ project يعرّف الـ agent بالـ stack والـ rules متاعك من أوّل message.", text: "# Project\nOne line: what this app does, and for whom.\n\n## Stack\n- Language / framework:\n- Database:\n- Run: npm run dev\n- Test: npm test\n\n## Rules\n- Make a plan and wait for my OK before big changes.\n- One feature at a time, each with its test.\n- Never read or change .env or secrets.\n- Run the tests before you say done.\n\n## Where things are\n- src/ ...\n- tests/ ..." },
+  { title: "الـ limits متاع الـ agent", why: "الـ agent ما يمسّش الـ secrets ولا يمشي للـ internet من غير ما تقرّر إنت.", text: "{\n  \"permissions\": {\n    \"deny\": [\n      \"Read(./.env)\",\n      \"Bash(curl:*)\",\n      \"WebFetch\"\n    ]\n  }\n}" },
+  { title: "Claude Code shortcuts", why: "الخمسة اللي نستعملهم أكثر.", text: "Shift+Tab   → plan mode\n@file       → point at the exact file\n!command    → run it, the agent sees the output\n/btw        → side question, not added to the chat\nEsc Esc     → rewind (code back to a checkpoint)" },
+];
+const OPEN = 2;
+
+const card = (it) => {
+  const el = document.createElement("article");
+  el.className = "card";
+  el.innerHTML = `<div class="card-head"><h3></h3><button class="copy" type="button">Copy</button></div><p class="card-why"></p><pre></pre>`;
+  el.querySelector("h3").textContent = it.title;
+  el.querySelector(".card-why").textContent = it.why;
+  el.querySelector("pre").textContent = it.text;
+  const b = el.querySelector(".copy");
+  b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(it.text); b.textContent = "Copied ✓"; b.classList.add("ok"); setTimeout(() => { b.textContent = "Copy"; b.classList.remove("ok"); }, 1600); } catch { b.textContent = "Select + copy"; }
+  });
+  return el;
+};
+const openBox = document.getElementById("open-items");
+ITEMS.slice(0, OPEN).forEach((it) => openBox.appendChild(card(it)));
+const lockedList = document.getElementById("locked-list");
+ITEMS.slice(OPEN).forEach((it) => { const li = document.createElement("li"); li.innerHTML = `<span class="lock">🔒</span><span></span>`; li.lastChild.textContent = it.title; lockedList.appendChild(li); });
+
+const unlock = () => {
+  if (document.body.classList.contains("unlocked")) return;
+  const all = document.getElementById("all-items");
+  ITEMS.forEach((it) => all.appendChild(card(it)));
+  document.body.classList.add("unlocked");
+};
+document.getElementById("download").addEventListener("click", () => {
+  const md = "# Feres Othman · free prompt pack\n\n" + ITEMS.map((it) => `## ${it.title}\n\n${it.why}\n\n\`\`\`\n${it.text}\n\`\`\`\n`).join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([md], { type: "text/markdown" }));
+  a.download = "feres-prompt-pack.md";
+  a.click();
+});
+
+// Where the visitor came from (bio links add ?src=ig|fb|tt|yt); kept on the workshop link too.
+const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube" };
+const srcKey = new URLSearchParams(location.search).get("src");
+const src = SOURCES[srcKey];
+if (src) { document.getElementById("source").value = src; document.getElementById("source-field").hidden = true; document.getElementById("to-workshop").href = `../session/?src=${srcKey}#book`; document.getElementById("to-workshop-top").href = `../session/?src=${srcKey}#book`; }
+
+// Someone who already unlocked it on this browser sees the pack straight away.
+try { if (localStorage.getItem("pack") === "1") { unlock(); document.getElementById("get").classList.add("sent"); } } catch {}
+
+// The gate: answers go into the same Google Form as the workshop booking, marked as a free-pack lead.
+(() => {
+  const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdIwU1mwuVR3CbM7GlMdnrCq710l12uWKF546X9Bj3M8dgp0A/formResponse";
+  const form = document.getElementById("form");
+  const error = document.getElementById("error");
+  const openedAt = Date.now();
+  const testMode = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    const bot = data.get("website") || Date.now() - openedAt < 4000;
+    data.delete("website");
+    const phone = (data.get("entry.178368777") || "").replace(/\s+/g, "");
+    let msg = "";
+    if (!/^(\+?216)?\d{8}$/.test(phone) && !/^\+\d{8,15}$/.test(phone)) msg = "اكتب نومرو واتساب صحيح (8 أرقام).";
+    else if (!data.get("entry.2137076498")) msg = "اختار وضعيتك توّا.";
+    else if (!data.get("entry.470206187")) msg = "اختار مستواك في البرمجة.";
+    else if (!data.get("entry.1586036539")) msg = "لازم توافق باش نكلّموك على واتساب.";
+    error.textContent = msg;
+    if (msg) return;
+    const button = form.querySelector("button");
+    button.disabled = true;
+    button.textContent = "قاعد نحلّ…";
+    try {
+      if (testMode) document.getElementById("test-note").textContent = "نسخة تجربة: ما تبعث شي للـ form الحقيقي.";
+      else if (!bot) await fetch(FORM, { method: "POST", mode: "no-cors", body: new URLSearchParams(data) });
+      try { localStorage.setItem("pack", "1"); } catch {}
+      unlock();
+      document.getElementById("get").classList.add("sent");
+      document.getElementById("full").scrollIntoView({ block: "start" });
+    } catch {
+      error.textContent = "ما تبعثش. ثبّت في الكونكسيون وعاود.";
+      button.disabled = false;
+      button.textContent = "حلّلي الـ pack";
+    }
+  });
+})();
+</script>
+</body>
+</html>
