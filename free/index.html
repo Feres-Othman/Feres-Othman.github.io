@@ -334,7 +334,7 @@ body.unlocked .locked-only{display:none}
         <div id="source-field"><label for="source">منين سمعت بينا؟</label>
           <select id="source" name="entry.2000322151">
             <option value="">اختار</option>
-            <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>صاحبي قالي</option>
+            <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>WhatsApp</option><option>صاحبي قالي</option><option>إعلان</option>
           </select>
         </div>
         <label class="consent"><input type="checkbox" name="entry.1586036539" value="إي، موافق" required><span>موافق نكلّموك على واتساب بخصوص الـ workshop&nbsp;<span class="req">*</span></span></label>
@@ -464,7 +464,7 @@ document.getElementById("download").addEventListener("click", () => {
 });
 
 // Where the visitor came from (bio links add ?src=ig|fb|tt|yt); kept on the workshop link too.
-const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube" };
+const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube", ad: "إعلان", wa: "WhatsApp" };
 const srcKey = new URLSearchParams(location.search).get("src");
 const src = SOURCES[srcKey];
 if (src) { document.getElementById("source").value = src; document.getElementById("source-field").hidden = true; document.getElementById("to-workshop").href = `../session/?src=${srcKey}#book`; document.getElementById("to-workshop-gift").href = `../session/?src=${srcKey}#book`; }
