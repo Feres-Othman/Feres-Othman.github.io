@@ -400,7 +400,7 @@ footer{padding:34px 0 96px;color:var(--dim);font-size:14px;border-top:1px solid 
         <div id="source-field"><label for="source">منين سمعت بينا؟</label>
           <select id="source" name="entry.2000322151">
             <option value="">اختار</option>
-            <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>صاحبي قالي</option>
+            <option>TikTok</option><option>Instagram</option><option>Facebook</option><option>YouTube</option><option>WhatsApp</option><option>صاحبي قالي</option><option>إعلان</option>
           </select>
         </div>
         <div><label for="build">شنوّة تحبّ تبني بالـ AI؟</label><textarea id="build" name="entry.347514487" rows="2"></textarea></div>
@@ -500,7 +500,7 @@ function barState(s) {
 // Booking: answers go straight into the existing Google Form, so the app's waitlist keeps working.
 (() => {
   const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdIwU1mwuVR3CbM7GlMdnrCq710l12uWKF546X9Bj3M8dgp0A/formResponse";
-  const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube", ad: "إعلان" };
+  const SOURCES = { ig: "Instagram", fb: "Facebook", tt: "TikTok", yt: "YouTube", ad: "إعلان", wa: "WhatsApp" };
   const form = document.getElementById("form");
   const error = document.getElementById("error");
   const src = SOURCES[new URLSearchParams(location.search).get("src")];
